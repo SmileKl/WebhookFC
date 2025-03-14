@@ -1,7 +1,7 @@
 name: Daily Reminder
 on:
   schedule:
-    - cron: '54 14 * * *'  # UTC时间15点（北京时间23点，需+8小时换算）
+    - cron: '0/1 * * * *'  # UTC时间15点（北京时间23点，需+8小时换算）
 env:
   TZ: Asia/Shanghai
     
