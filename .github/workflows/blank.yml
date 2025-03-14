@@ -1,0 +1,25 @@
+name: Daily Reminder
+on:
+  schedule:
+    - cron: '0 15 * * *'  # UTC时间15点（北京时间23点，需+8小时换算）
+env:
+  TZ: Asia/Shanghai
+    
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Set timezone
+      run: sudo timedatectl set-timezone Asia/Shanghai
+    - name: Send WeChat Work message
+      run: |
+        curl -X POST \
+          -H "Content-Type: application/json" \
+          -d '{
+            "msgtype": "text",
+            "text": {
+              "content": "【工时提醒】请及时填报今日工时！n填写链接：https://xxx.com"
+            }
+          }' \
+          ${{ secrets.WECHAT_WEBHOOK_URL }}
